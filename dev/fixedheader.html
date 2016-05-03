@@ -1,0 +1,99 @@
+<html><head>
+<!--<link rel="stylesheet" type="text/css" media="screen,print" href="fixedheader.css">-->
+<style type="text/css">
+@keyframes slidy {
+	0% { left: 0%; }
+	35% { left: 0%; }
+	50% { left: -100%; }
+	85% { left: -100%; }
+	100% { left: 0%; }
+	/*70% { left: -200%; }
+	75% { left: -300%; }
+	95% { left: -300%; }
+	100% { left: -400%; }*/
+}
+body {
+	background-color: #CCC;
+	border: solid 2px;
+	margin:80px 80px 100px 100px;
+}
+div#fixedheader {
+	position:fixed;
+	opacity: .8;
+	top:0px;
+	left:0px;
+	width:100%;
+	color:#CCC;
+	background:#333;
+	padding:20px;
+}
+div#background {
+	top:0px;
+	width: 800px;
+	height: auto;
+	background-size: contain;
+}
+div#fixedfooter {
+	position:fixed;
+	bottom:0px;
+	opacity: .8;
+	left:0px;
+	width:100%;
+	color:#CCC;
+	background:#333;
+	padding:8px;
+}
+div#slider { 
+	overflow: hidden; 
+}
+div#slider figure img { 
+	width: 20%; 
+	float: left; 
+}
+div#slider figure { 
+	position: relative;
+	width: 500%;
+	margin: 0;
+	left: 0;
+	text-align: left;
+	font-size: 0;
+	animation: 10s slidy infinite; 
+}
+
+</style>
+</head>
+<body>
+<div id="fixedheader">
+	<p>Karl S. Bayer</p>
+	<!--<H4>Engineering and Art</H4>-->
+	<div
+</div>
+<!--<div id="fixedheader">Engineering and Art</div>-->
+
+
+<!--<div id="background">stuff</div>
+<h1>Page Heading</h1>
+<p>Content placeholder ...</p>-->
+
+<base >
+<div id="slider">
+	<figure>
+		<img src="images/GreekSplatter.jpg" alt>
+		<img src="images/AshSoot.jpg" alt>
+	</figure>
+</div>
+
+<div id="fixedfooter">
+<div style="height: 39px; width: 39px;  height: 39px; right: 20px; position: relative; float: right; ">
+	<a href="https://www.instagram.com/kaaarrrrrl/" title="https://www.instagram.com/kaaarrrrrl/"><img src="./images/instagram-icon.png" alt="" style="border: none; height: 39px; width: 39px; "></a>
+</div>
+<div style="height: 38px; width: 37px;  height: 38px; right: 20px; position: relative; float: right; ">
+	<a href="https://www.facebook.com/brlkyan.czsz" title="https://www.facebook.com/bryan.czlkiz">
+	<img src="./images/iu.png" alt="" style="border: none; height: 38px; width: 38px; "></a>
+</div>
+<!--<div style="height: 40px; width: 40px;  height: 40px; left: 633px; position: absolute; top: 682px; width: 40px; z-index: 1; " class="tinyText style_SkipStroke_3 stroke_1">
+	<a href="https://ello.co/bryan_czibesz" title="https://ello.co/bryan_czibesz"><img src="./images/optimized.jpg" alt="" style="border: none; height: 40px; width: 40px; "></a>
+</div>-->
+
+</div>
+</body></html>
