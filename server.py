@@ -1,7 +1,11 @@
+#!/usr/bin/env python
+
 import SimpleHTTPServer
 import SocketServer
 import PotGenerator
+import os
 
+os.chdir('/home/pi/PotteryOnline/')
 
 
 PORT = 8080
