@@ -11,6 +11,12 @@ from matplotlib import pyplot as p
 		Viewer displays based on that type!
 	Main: generates functions, displays functions, allows user to like or not, stores in db. 
 '''
+'''
+	Notes 5/10/2016: Not everything needs to be an object. Here, we don't really see any advantages over just 
+	writing an algorithm that generates the polynomial on the spot and then just outputs the points and the 
+	constants used in the generation.
+	Simple(ish) nested for loop. This would have taken substantially less time than the monstrosity I built below.
+'''
 
 class PolyPotGenerator(list):
 	def __init__(self, polyLimits):
