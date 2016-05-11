@@ -1,0 +1,45 @@
+<html><head>
+<!--<link rel="stylesheet" type="text/css" media="screen,print" href="fixedheader.css">-->
+<style type="text/css">
+@keyframes slidy {
+0% { left: 0%; }
+30% { left: 0%; }
+35% { left: -100%; }
+65% { left: -100%; }
+70% { left: -200%; }
+98% { left: -200%; }
+100% { left: 0%; }
+}
+
+body { 
+  margin: 0;
+} 
+div#slider { 
+  overflow: hidden;
+}
+div#slider figure img { 
+  width: 33.3%; 
+  float: left;
+}
+div#slider figure { 
+  position: relative;
+  width: 300%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  animation: 10s slidy infinite;
+}
+
+</style>
+</head>
+<body>
+<!--<base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/">-->
+<div id="slider">
+  <figure>
+    <img src="images/AshSoot.jpg" alt>
+    <img src="images/CookieJar.jpg" alt>
+    <img src="images/GreekSplatter.jpg" alt>
+  </figure>
+</div>
+</body></html>
