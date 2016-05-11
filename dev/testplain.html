@@ -1,33 +1,6 @@
 <html>
 <head>
 <style type="text/css">
-@keyframes slidy {
-	0% { left: 0%; }
-	35% { left: 0%; }
-	50% { left: -100%; }
-	85% { left: -100%; }
-	100% { left: 0%; }
-	/*70% { left: -200%; }
-	75% { left: -300%; }
-	95% { left: -300%; }
-	100% { left: -400%; }*/
-}
-div#slider { 
-	overflow: hidden; 
-}
-div#slider figure { 
-	position: relative;
-	width: 600%;
-	left: 0;
-	text-align: left;
-	animation: 10s slidy infinite; 
-}
-div#slider figure img { 
-	width: 33%; 
-	height: 100%;
-	float: left;
-
-}
 body {
 	margin: 0;
 }
@@ -42,17 +15,21 @@ div#fixedheader {
 	background:#333;
 	padding:10px;
 }
+div#background {
+    width: 100%;
+}
+div#figure img {
+    width: 100%;
+}
 </style>
 </head>
 <body>
 <div id="fixedheader">
 Karl S. Bayer
 </div>
-<div id="slidy">
+<div id="background">
     <figure>
-    <img src="images/CookieJar.jpg" alt>
-    <img src="images/AshSoot.jpg" alt>
-    <img src="images/GreekSplatter.jpg" alt>
+        <img src="images/CookieJar.jpg" alt>
     </figure>
 </div>
 </body>
