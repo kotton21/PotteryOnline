@@ -9,7 +9,7 @@ import logging.handlers
 import sys
 import time
 
-#os.chdir('/home/pi/PotteryOnline/')
+os.chdir('/home/pi/PotteryOnline/')
 
 PORT = 8080
 
