@@ -9,6 +9,8 @@ import logging.handlers
 import sys
 import time
 
+from urlparse import urlparse, parse_qs
+
 os.chdir('/home/pi/PotteryOnline/')
 
 PORT = 8080
@@ -27,6 +29,12 @@ class MySimpleHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 				g = PotGenerator.PolyPotGenerator(polyLimits)
 				print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
 				g.plot(True)
+
+				#parse the query
+				query_components = parse_qs(urlparse(self.path).query)
+				res = query_components["res"] 
+				print urlparse(self.path).query
+
 			finally:
 				f.close()
 
