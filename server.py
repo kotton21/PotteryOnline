@@ -50,7 +50,7 @@ class MyLogger(object):
 			self.logger.log(self.level, message.rstrip())
 
 sys.stdout = MyLogger(logger, logging.INFO)
-#sys.stderr = MyLogger(logger, logging.ERROR)
+sys.stderr = MyLogger(logger, logging.ERROR)
 #end logging
 #usage: logger.info("bla bla") or print "..."
 
