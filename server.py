@@ -9,7 +9,7 @@ import logging.handlers
 import sys
 import time
 
-os.chdir('/home/pi/PotteryOnline/')
+#os.chdir('/home/pi/PotteryOnline/')
 
 PORT = 8080
 
@@ -36,7 +36,7 @@ LOG_LEVEL = logging.INFO
 logger = logging.getLogger(__name__)
 logger.setLevel(LOG_LEVEL)
 logHandler = logging.handlers.TimedRotatingFileHandler(LOG_FILENAME, when="midnight", backupCount=7)
-formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(messages)s')
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
