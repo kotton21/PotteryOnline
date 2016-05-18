@@ -1,0 +1,6 @@
+#ignore the fig
+fig.jpg
+logs/*
+*.pyc
+*~
+
