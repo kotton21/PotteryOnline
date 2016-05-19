@@ -110,11 +110,11 @@ if __name__ == "__main__":
 	#Testing only.
 	polyLimits = (-.1,.1,-.03,.03,-.0001,.0001)
 	g = PolyPotGenerator(polyLimits)
-	print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
+	print str(g.numCurves)+': '+str([round(c,2) for poly in g for c in poly])
 	g.plot(False)
 	while raw_input() != 'q':
 		g = PolyPotGenerator(polyLimits)
-		print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
+		print str(g.numCurves)+': '+str([round(c,2) for poly in g for c in poly])
 		g.plot(False)
 		
 	

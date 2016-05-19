@@ -24,17 +24,17 @@ class MySimpleHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 		f = self.send_head()
 		if f:
 			try:
-				self.copyfile(f, self.wfile)
+				print "new fig request"
 				polyLimits = (-.1,.1,-.03,.03,-.0001,.0001)				
 				g = PotGenerator.PolyPotGenerator(polyLimits)
 				print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
 				g.plot(True)
 
 				#parse the query
-				query_components = parse_qs(urlparse(self.path).query)
-				res = query_components["res"] 
+				#query_components = parse_qs(urlparse(self.path).query)
+				#res = query_components["res"] 
 				print urlparse(self.path).query
-
+				self.copyfile(f, self.wfile)
 			finally:
 				f.close()
 
