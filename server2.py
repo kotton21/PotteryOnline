@@ -47,6 +47,7 @@ class MyHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		print self.client_address
 		print self.path
 		print self.command
+
 		#input stream self.rfile
 		#output stream self.wfile
 		#self.error_message_format: dictionary; "code" and "message" and "explain"??
