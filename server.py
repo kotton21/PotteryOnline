@@ -11,7 +11,10 @@ import time
 
 from urlparse import urlparse, parse_qs
 
-os.chdir('/home/pi/PotteryOnline/')
+try:
+	os.chdir('/home/pi/PotteryOnline/')
+except:
+	print 'executing from current direcory'
 
 PORT = 8080
 
