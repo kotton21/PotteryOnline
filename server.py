@@ -24,18 +24,25 @@ PORT = 8080
 class MySimpleHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_GET(self):
 		"""Serve a GET request."""
+		#generate the pot before the stuff
+		print "path"		
+		print self.path
+		if self.path == "/fig.jpg":
+			print "new fig request"
+			polyLimits = (-.1,.1,-.03,.03,-.0001,.0001)				
+			g = PotGenerator.PolyPotGenerator(polyLimits)
+			print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
+			g.plot(True)
+			
 		f = self.send_head()
 		if f:
 			try:
-				print "new fig request"
-				polyLimits = (-.1,.1,-.03,.03,-.0001,.0001)				
-				g = PotGenerator.PolyPotGenerator(polyLimits)
-				print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
-				g.plot(True)
+				
 
 				#parse the query
-				#query_components = parse_qs(urlparse(self.path).query)
+				query_components = parse_qs(urlparse(self.path).query)				
 				#res = query_components["res"] 
+				print 'components %s'%query_components
 				print urlparse(self.path).query
 				self.copyfile(f, self.wfile)
 			finally:
@@ -73,8 +80,10 @@ httpd = SocketServer.TCPServer(("", PORT), Handler)
 
 logger.info("serving at port" + str(PORT))
 print "serving at port", PORT
-httpd.serve_forever()
-
+try:
+	httpd.serve_forever()
+except KeyboardInterrupt:
+	httpd.server_close()
 
 #import daemon
 
