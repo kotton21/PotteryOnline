@@ -4,3 +4,5 @@ logs/*
 *.pyc
 *~
 three.js-master/*
+PotGenerator.py.save
+server2.py.save
