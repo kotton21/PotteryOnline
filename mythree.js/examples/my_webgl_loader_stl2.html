@@ -90,7 +90,8 @@
 
 				// ASCII file
 
-				var loader = new THREE.STLLoader();
+				var stlLoader = new THREE.STLLoader();
+				var jsonLoader = new THREE.JSONLoader();
 /*
 				loader.load( './models/stl/House1.stl', function ( geometry ) {
 
@@ -113,7 +114,7 @@
 
 				//var material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 1000 } );
 				
-				loader.load( './models/stl/Untitled.stl', function ( geometry ) {
+				stlLoader.load( './models/stl/Untitled.stl', function ( geometry ) {
 					
 					var material = new THREE.MeshPhongMaterial( { color: 0xF0EEDD, specular: 0x111111, shininess: 200 } );
 
@@ -121,7 +122,7 @@
 					if (geometry.hasColors) {
 						meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
 					}
-					var mesh = new THREE.Mesh( geometry, material );
+					var mesh = new THREE.Mesh( geometry, meshMaterial );
 					
 					mesh.position.set( 0, 0, 0 );
 					mesh.rotation.set( -Math.PI / 2, 0, 0 );
@@ -134,21 +135,20 @@
 
 				} );
 
-				/*
-				loader.load( './models/stl/binary/pr2_head_tilt.stl', function ( geometry ) {
-					var material = new THREE.MeshPhongMaterial( { color: 0x2AAAAA, specular: 0x111111, shininess: 200 } );
+				jsonLoader.load( './models/json/shape3d.json', function ( geometry ) {
+					var material = new THREE.MeshPhongMaterial( { color: 0x0040ff, specular: 0x111111, shininess: 200 } );
 					var mesh = new THREE.Mesh( geometry, material );
 
-					mesh.position.set( 40, 6, -40 );
-					mesh.rotation.set( - Math.PI / 2, 0.3, 0 );
-					mesh.scale.set( 20, 20, 20 );
+					mesh.position.set( 20, 5, -20 );
+					mesh.rotation.set( 0, 0, 0 );
+					mesh.scale.set( 2, 2, 2 );
 
 					mesh.castShadow = true;
 					mesh.receiveShadow = true;
 
 					scene.add( mesh );
 
-				} );*/
+				} );
 /*
 				// Colored binary STL
 				loader.load( './models/stl/binary/colored.stl', function ( geometry ) {
@@ -249,7 +249,7 @@
 
 			function render() {
 
-				var timer = Date.now() * 0.0004	;
+				var timer = Date.now() * 0.0005	;
 
 				camera.position.x = Math.cos( timer ) * cameraDistance + cameraOffset;
 				camera.position.z = Math.sin( timer ) * cameraDistance - cameraOffset;
