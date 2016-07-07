@@ -12,17 +12,17 @@ import numpy as np
 
 import json
 
-#SHAPE = [
-#	[1,0],
-#	[2,1],
-#	[2.1,2],
-#    [3,3]]
 SHAPE = [
 	[1,0],
-	[1,1]]
+	[2,1],
+	[2.1,2],
+    [3,3]]
+#SHAPE = [
+#	[1,0],
+#	[1,1]]
 
 
-NUM_ROTATIONS = 6
+NUM_ROTATIONS = 20
 NUM_POINTS = len(SHAPE)
 NUM_VERTS = NUM_POINTS * NUM_ROTATIONS
 
@@ -56,7 +56,7 @@ for i in range(NUM_ROTATIONS):
 #print shape3d
 #print shape3d[0,:,:]
 
-indices = np.zeros(( NUM_VERTS, 6 ))
+indices = np.zeros(( NUM_VERTS, 8 ))
 vertices = np.zeros(( NUM_VERTS, 3 ))
 uvs = np.zeros(( NUM_VERTS, 2 ))
 normals = np.zeros(( NUM_VERTS * 2, 3 ))
@@ -70,7 +70,7 @@ for i in range( 0, NUM_VERTS):
     r = i / NUM_POINTS
     rr = (r+1)%NUM_ROTATIONS
     #Triangle 1
-    print r,p
+    print "\n\n",r,p
     T1 = np.array([ shape3d[r, p, :], shape3d[r, pp, :], shape3d[rr, p, :] ])
     nT1 = np.cross(T1[1,:]-T1[0,:], T1[2,:]-T1[0,:])
 
@@ -79,8 +79,10 @@ for i in range( 0, NUM_VERTS):
     nT2 = np.cross(T2[1,:]-T2[0,:], T2[2,:]-T2[0,:])
     #print T1,nT1/np.linalg.norm(nT1)
     #print T2,-nT2/np.linalg.norm(nT2)
-    normals[i*2, :] = nT1
-    normals[i*2+1, :] = nT2
+
+    #apparently these don't matter anyway... why?
+    normals[i*2, :] = nT1/np.linalg.norm(nT1)
+    normals[i*2+1, :] = -nT2/np.linalg.norm(nT2)
 
     #indices and point value calculations
     tp = shape3d[r, p, :] #this point
@@ -89,19 +91,23 @@ for i in range( 0, NUM_VERTS):
     #theta = np.tan(tp[2],
     theta = (np.arctan2(tp[2], tp[0]) / np.pi) / 2 + .5
     uvs[i, :] = np.array([theta, tp[1] ])  # theta, z decomposition, actually theta(xz), y decomp in 
-    indices[i,:] = np.array([
+    indices[i,:] = np.array([0,
         i, 
         (i+1)%NUM_VERTS, 
-        (NUM_ROTATIONS+i)%NUM_VERTS, 
-        (NUM_ROTATIONS+i)%NUM_VERTS, 
-        (NUM_ROTATIONS + i + 1)%NUM_VERTS,
-        ( i + 1 ) % NUM_VERTS 
+        (NUM_POINTS+i)%NUM_VERTS, 
+        0,
+        (NUM_POINTS+i)%NUM_VERTS, 
+        ( i + 1 ) % NUM_VERTS, 
+        (NUM_POINTS + i + 1)%NUM_VERTS
     ])
+
+    print indices[i,:]
+    print vertices[i,:]
 
 
 print np.around(vertices, 4)
 print np.around(uvs, 4)
-
+print indices
 
 # print np.reshape(shape3d, (NUM_POINTS*NUM_ROTATIONS, 3))
 
@@ -131,31 +137,41 @@ print np.around(uvs, 4)
 #normals = []
 #uvs = [] 
 
+faces = indices.reshape(NUM_POINTS*NUM_ROTATIONS*3*2+(2*NUM_VERTS)).tolist()
+print faces
+vertices = np.around(vertices, 4).reshape((NUM_POINTS*NUM_ROTATIONS*3)).tolist()
+normals = np.around(normals, 4).reshape((NUM_POINTS*NUM_ROTATIONS*2*3)).tolist()
+uvs = np.around(uvs, 4).reshape((NUM_POINTS*NUM_ROTATIONS*2)).tolist()
+
+materials = [{u'opacity': 1, u'uuid': u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', u'color': 16714940, u'wireframe': False, u'emissive': 0, u'shininess': 50, u'specular': 0, u'ambient': 16714940, u'type': u'MeshPhongMaterial', u'transparent': False}]
+
 metadata = {
-        "version"       : 1,
-        "type"          : "Geometry",
-        "generatedBy"   : "Karl Bayer's 3d.py",
-        "vertices"      : NUM_VERTS,
-        "faces"         : NUM_VERTS*6,
-        "normals"       : NUM_VERTS*6,
-        "colors"        : 0,
-        "uvs"           : [NUM_VERTS*6],
-        "materials"     : 0,
-        "morphTargets"  : 0,
-        "bones"         : 0
+        u"version"      : 4,
+        u"type"         : u"Geometry",
+        u"generator"    : u"Karl Bayer's 3d-2.py",
 }
-    
-obj = {"metadata":metadata, 
-       "faces": indices.reshape(NUM_POINTS*NUM_ROTATIONS*3*2, 1).tolist(),
-       "vertices": vertices.reshape((NUM_POINTS*NUM_ROTATIONS*3, 1)).tolist(),
-       "normals": normals.reshape((NUM_POINTS*NUM_ROTATIONS*2*3, 1)).tolist(),
-       "uvs": [uvs.reshape((NUM_POINTS*NUM_ROTATIONS*2, 1)).tolist()]
+
+data = {
+       u"faces": faces,
+       u"vertices": vertices,
+       #u"normals": normals,
+       u"uvs": [uvs]
+       }   
+geometries = [{u"data":data, u"uuid": u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u"type":u"Geometry"}]
+obj = {u'uuid': u'0D4F494E-35AD-4D5B-9696-7DF60B73E7F0', u'geometry': u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u'material': 
+       u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', u'matrix': [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], u'castShadow': True,
+       u'type': u'Mesh', u'receiveShadow': True, u'name': u'shape3d001'
        }
+jobj = {u'object':obj, u'materials':materials, u'geometries':geometries, u'metadata':metadata}
 
 FILEPATH = "C:/Users/Kbayer/Source/Repos/PotteryOnline/mythree.js/examples/models/json/"
 FILENAME = "shape3d.json"
 with open(FILEPATH+FILENAME, 'w+') as file:
-    json.dump(obj, file)
+    json.dump(jobj, file)
 
     
 
+print 'vertices len: ',len(vertices)
+print 'faces len: ',len(faces)
+print 'normals len: ',len(normals)
+print 'uvs len: ',len(uvs)

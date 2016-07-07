@@ -45,6 +45,8 @@
 		<script src="../build/three.js"></script>
 
 		<script src="js/loaders/STLLoader.js"></script>
+        <!--<script src="js/loaders/JSONLoader.js"></script>-->
+        <script src="js/loaders/OBJLoader.js"></script>
 
 		<script src="js/Detector.js"></script>
 		<script src="js/libs/stats.min.js"></script>
@@ -91,7 +93,8 @@
 				// ASCII file
 
 				var stlLoader = new THREE.STLLoader();
-				var jsonLoader = new THREE.JSONLoader();
+				//var jsonLoader = new THREE.JSONLoader();
+				var objLoader = new THREE.ObjectLoader();
 /*
 				loader.load( './models/stl/House1.stl', function ( geometry ) {
 
@@ -134,21 +137,41 @@
 					scene.add( mesh );
 
 				} );
+                
+                /*
+			    //jsonLoader.load( './models/json/shape3d.json', function ( geometry ) {
+			        //obLoader.load('./models/json/teapot-claraio.json', function (geometry) {
+				obLoader.load('./models/json/teapot-claraio.json', function (geometry) {
+					var material = new THREE.MeshPhongMaterial( { color: 0x0040ff, specular: 0x111111, shininess: 20 } );
+					//var mesh = new THREE.Mesh( geometry, material );
 
-				jsonLoader.load( './models/json/shape3d.json', function ( geometry ) {
-					var material = new THREE.MeshPhongMaterial( { color: 0x0040ff, specular: 0x111111, shininess: 200 } );
-					var mesh = new THREE.Mesh( geometry, material );
+				    var meshMaterial = material;
+				    if (geometry.hasColors) {
+				        meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+				    }
+				    var mesh = new THREE.Mesh(geometry, meshMaterial);
 
-					mesh.position.set( 20, 5, -20 );
+					mesh.position.set( 25, 7, -20 );
 					mesh.rotation.set( 0, 0, 0 );
-					mesh.scale.set( 2, 2, 2 );
+					mesh.scale.set( 1, 1, 1 );
 
 					mesh.castShadow = true;
 					mesh.receiveShadow = true;
 
 					scene.add( mesh );
 
-				} );
+				} ); */
+
+				objLoader.load("./models/json/shape3d.json", function (obj) {
+				//objLoader.load("./models/json/teapot-claraio.json", function (obj) {
+				    //var mesh = new THREE.Mesh(obj);
+
+				    obj.position.set(21.5, 4, -23.5);
+				    //obj.rotation.set(0, -Math.PI / 2, 0);
+				    obj.scale.set(1, 1, 1);
+				    scene.add(obj);
+				});
+                
 /*
 				// Colored binary STL
 				loader.load( './models/stl/binary/colored.stl', function ( geometry ) {
@@ -174,7 +197,8 @@
 
 				// Lights
 
-				scene.add( new THREE.HemisphereLight( 0xe6ffff, 0xfffde6, .8 ) );
+			    scene.add( new THREE.HemisphereLight( 0xffffbb, 0xfffde6, .6 ) );
+			    //scene.add(new THREE.AmbientLight(0x404040, .6));
 
 				addShadowedLight( 40, 50, -20, 0xffffff, .3 );
 				//addShadowedLight( 0, 0, 20, 0xffffff, 1.35 );

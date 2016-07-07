@@ -18704,6 +18704,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 				// console.log("type", type, "bits", isQuad, hasMaterial, hasFaceVertexUv, hasFaceNormal, hasFaceVertexNormal, hasFaceColor, hasFaceVertexColor);
 
 				if ( isQuad ) {
+				    console.log("is Quad");
 
 					faceA = new THREE.Face3();
 					faceA.a = faces[ offset ];
@@ -18820,6 +18821,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					geometry.faces.push( faceB );
 
 				} else {
+				    console.log("is not Quad");
 
 					face = new THREE.Face3();
 					face.a = faces[ offset ++ ];
@@ -19448,7 +19450,7 @@ Object.assign( THREE.ObjectLoader.prototype, {
 	},
 
 	parse: function ( json, onLoad ) {
-
+	    console.log("parsing geometries");
 		var geometries = this.parseGeometries( json.geometries );
 
 		var images = this.parseImages( json.images, function () {
@@ -19651,7 +19653,7 @@ Object.assign( THREE.ObjectLoader.prototype, {
 						break;
 
 					case 'Geometry':
-
+					    console.log("Loading geometry");
 						geometry = geometryLoader.parse( data.data, this.texturePath ).geometry;
 
 						break;

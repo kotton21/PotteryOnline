@@ -6,3 +6,4 @@ logs/*
 three.js-master/*
 PotGenerator.py.save
 server2.py.save
+/3d.py
