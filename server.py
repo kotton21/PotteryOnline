@@ -8,6 +8,8 @@ import logging
 import logging.handlers
 import sys
 import time
+import rotate3D2
+
 
 from urlparse import urlparse, parse_qs
 
@@ -16,7 +18,7 @@ try:
 except:
 	print 'executing from current direcory'
 
-PORT = 8080
+PORT = 8083
 
 # Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 
@@ -25,20 +27,29 @@ class MySimpleHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_GET(self):
 		"""Serve a GET request."""
 		#generate the pot before the stuff
-		print "path"		
-		print self.path
-		if self.path == "/fig.jpg":
+		print "this is the path.............................."
+		print "path: %s"%self.path
+		print self.path == "/mythree.js/examples/my_webgl_loader_stl2.html"
+		if self.path.strip() == "/fig.jpg":
 			print "new fig request"
 			polyLimits = (-.1,.1,-.03,.03,-.0001,.0001)				
 			g = PotGenerator.PolyPotGenerator(polyLimits)
 			print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
 			g.plot(True)
+
+		if self.path == "/mythree.js/examples/my_webgl_loader_stl2.html":
+			print "new json pot request"
+			polyLimits = (-.1,.1,-.03,.03,-.0001,.0001)				
+			g = PotGenerator.PolyPotGenerator(polyLimits)
+			print g.numCurves,': ',[round(c,2) for poly in g for c in poly]
+			#g.plot(True)
+			shape = g.zipPoints()
+			filename = "./mythree.js/examples/models/json/shape3d.json"
+			rotate3D2.build_3d_shape(shape, 20, filename)
 			
 		f = self.send_head()
 		if f:
 			try:
-				
-
 				#parse the query
 				query_components = parse_qs(urlparse(self.path).query)				
 				#res = query_components["res"] 

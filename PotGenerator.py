@@ -72,6 +72,11 @@ class PolyPotGenerator(list):
 		y = [self.getY(i) for i in x]
 		# print x,y
 		return self.verify(x,y)
+
+	def zipPoints(self):
+		(X, Y) = self.getPoints()
+		shape = [[x,y] for (x,y) in zip(X,Y)]
+		return shape
 			
 	def plot(self,save):
 		X,Y = self.getPoints()
