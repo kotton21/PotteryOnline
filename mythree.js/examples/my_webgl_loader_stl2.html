@@ -71,7 +71,7 @@
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200 );
 				camera.position.set( 0, 10, 80 );
 
-				cameraTarget = new THREE.Vector3( 21.5, 3.4, -23.5 );
+				cameraTarget = new THREE.Vector3( 21.5, 5, -23.5 );
 
 				scene = new THREE.Scene();
 				scene.fog = new THREE.Fog( 0x72645b, 40, 100 );
@@ -117,26 +117,26 @@
 
 				//var material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 1000 } );
 				
-				stlLoader.load( './models/stl/Untitled.stl', function ( geometry ) {
+				//stlLoader.load( './models/stl/Untitled.stl', function ( geometry ) {
 					
-					var material = new THREE.MeshPhongMaterial( { color: 0xF0EEDD, specular: 0x111111, shininess: 200 } );
+				//	var material = new THREE.MeshPhongMaterial( { color: 0xF0EEDD, specular: 0x111111, shininess: 200 } );
 
-					var meshMaterial = material;
-					if (geometry.hasColors) {
-						meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
-					}
-					var mesh = new THREE.Mesh( geometry, meshMaterial );
+				//	var meshMaterial = material;
+				//	if (geometry.hasColors) {
+				//		meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+				//	}
+				//	var mesh = new THREE.Mesh( geometry, meshMaterial );
 					
-					mesh.position.set( 0, 0, 0 );
-					mesh.rotation.set( -Math.PI / 2, 0, 0 );
-					mesh.scale.set( 1, 1, 1 );
+				//	mesh.position.set( 0, 0, 0 );
+				//	mesh.rotation.set( -Math.PI / 2, 0, 0 );
+				//	mesh.scale.set( 1, 1, 1 );
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+				//	mesh.castShadow = true;
+				//	mesh.receiveShadow = true;
 
-					scene.add( mesh );
+				//	scene.add( mesh );
 
-				} );
+				//} );
                 
                 /*
 			    //jsonLoader.load( './models/json/shape3d.json', function ( geometry ) {
@@ -162,13 +162,13 @@
 
 				} ); */
 
-				objLoader.load("./models/json/shape3d.json", function (obj) {
+				objLoader.load("./models/json/test.json", function (obj) {
 				//objLoader.load("./models/json/teapot-claraio.json", function (obj) {
 				    //var mesh = new THREE.Mesh(obj);
 
 				    obj.position.set(21.5, 4, -23.5);
 				    //obj.rotation.set(0, -Math.PI / 2, 0);
-				    obj.scale.set(.05, .05, .05);
+				    obj.scale.set(2, 2, 2);
 				    scene.add(obj);
 				});
                 
@@ -273,10 +273,12 @@
 
 			function render() {
 
-				var timer = Date.now() * 0.0005	;
+			    //var timer = Date.now() * 0.0005	;
+			    var timer = Date.now() * 0.001;
 
 				camera.position.x = Math.cos( timer ) * cameraDistance + cameraOffset;
-				camera.position.z = Math.sin( timer ) * cameraDistance - cameraOffset;
+				camera.position.y = Math.sin(timer*.5) * 3 + 10;
+				camera.position.z = Math.sin(timer) * cameraDistance - cameraOffset;
 
 				camera.lookAt( cameraTarget );
 
