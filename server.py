@@ -18,7 +18,7 @@ try:
 except:
 	print 'executing from current direcory'
 
-PORT = 8083
+PORT = 8080
 
 # Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 

@@ -36,12 +36,52 @@ def rotate_3d( SHAPE, NUM_ROTATIONS ):
     #print shape3d[0,:,:]
     return shape3d
 
+def build_quad_indices( shape3d, NUM_ROTATIONS ):
+    """
+
+    Builds quad indexes, normals, and faces from the shape vertices
+    Shape3d is a NUM_VERTICES x 3 array
+    Do I want a normal for each face and for each vertice? or do I 
+    want them just on the faces?
+    Should be able to do this with a numpy dot product if i keep the
+    num-verts constant and use the same tranformation matrix..
+
+    """
+    NUM_POINTS = shape3d.shape[1]
+    NUM_VERTS = NUM_POINTS * NUM_ROTATIONS
+
+    faces = np.zeros(( NUM_VERTS, 5 ))
+    vertices = np.zeros(( NUM_VERTS, 3 ))
+    #uvs = np.zeros(( NUM_VERTS, 2 ))
+    #normals = np.zeros(( NUM_VERTS * 2, 3 ))
+    # powarr = np.array([2,2])
+    # powind = np.array([0,2])
+
+    for i in range(NUM_VERTS):
+        p = i % NUM_POINTS
+        r = i / NUM_POINTS
+
+        #faces for each quad
+        faces[i,:] = np.array([1,
+            i, 
+            (i+1)%NUM_VERTS, 
+            (NUM_POINTS+i+1)%NUM_VERTS,
+            (NUM_POINTS+i)%NUM_VERTS
+        ])
+        #vertices for each quad
+        vertices[i,:] = shape3d[r, p, :]
+
+    return (faces, vertices)
+
+
+
+
 
 def build_triangle_indices( shape3d, NUM_ROTATIONS ):
     """
 
     Builds the indexes, normals, and faces from the shape vertices
-    Also, why? just provide the quads
+    Also, why? just provide the qNUM_VERTSuads
 
     """
 
@@ -185,11 +225,64 @@ def export_json(filename, indices, vertices, uvs, normals):
     print 'normals len: ',len(normals)
     print 'uvs len: ',len(uvs)
 
-
 def build_3d_shape(SHAPE, NUM_ROTATIONS, FILENAME):
     shape3d = rotate_3d(SHAPE, NUM_ROTATIONS)
     ( indices, vertices, uvs, normals ) = build_triangle_indices( shape3d, NUM_ROTATIONS )
     export_json(FILENAME, indices, vertices, uvs, normals)
+    print 'saving to "%s"'%FILENAME
+
+def export_json_simple(filename, faces, vertices):
+    """
+
+    Exports the given shape to a json file
+    
+    """
+
+    NUM_VERTS = len( vertices )
+
+    faces = faces.reshape(NUM_VERTS*4+(NUM_VERTS)).tolist()
+    # print faces
+    vertices = np.around(vertices, 4).reshape((NUM_VERTS*3)).tolist()
+    # normals = np.around(normals, 4).reshape((NUM_VERTS*2*3)).tolist()
+    # uvs = np.around(uvs, 4).reshape((NUM_VERTS*2)).tolist()
+
+    #import uuid
+    #materialID = uuid.uuid4()
+    #geometryID = uuid.uuid4()
+    #objID = uuid.uuid5(uuid.NAMESPACE_URL, "www.karlsbayer.com")
+
+    #old uuid 
+
+    # materials = [{u'opacity': 1, u'uuid': u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', u'color': 16712000, u'wireframe': False, u'emissive': 0, u'shininess': 50, u'specular': 0, u'ambient': 16714940, u'type': u'MeshPhongMaterial', u'transparent': False}]
+
+    metadata = {
+            u"version"      : 4,
+            u"type"         : u"Geometry",
+            u"generator"    : u"Karl Bayer's 3d.py",
+    }
+
+    data = {
+        u"faces": faces,
+        u"vertices": vertices
+        }   
+    geometries = [{u"data":data, u"uuid": u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u"type":u"Geometry"}]
+    obj = {u'uuid': u'0D4F494E-35AD-4D5B-9696-7DF60B73E7F0', u'geometry': u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u'matrix': [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], u'castShadow': True,
+        u'type': u'Mesh', u'receiveShadow': True, u'name': u'shape3d001'
+        }
+    jobj = {u'object':obj, u'geometries':geometries, u'metadata':metadata}
+
+    # FILEPATH = "C:/Users/Kbayer/Source/Repos/PotteryOnline/mythree.js/examples/models/json/"
+    # FILENAME = "shape3d.json"
+    with open(filename, 'w+') as file:
+        json.dump(jobj, file)
+
+    print 'vertices len: ',len(vertices)
+    print 'faces len: ',len(faces)
+
+def build_3d_shape_quads(SHAPE, NUM_ROTATIONS, FILENAME):
+    shape3d = rotate_3d(SHAPE, NUM_ROTATIONS)
+    ( faces, vertices ) = build_quad_indices( shape3d, NUM_ROTATIONS )
+    export_json_simple(FILENAME, faces, vertices )
     print 'saving to "%s"'%FILENAME
 
 
@@ -203,11 +296,8 @@ if __name__ == "__main__":
     #	[1,0],
     #	[1,1]]
 
-    NUM_ROTATIONS = 20
+    NUM_ROTATIONS = 10
     
-    filename = "./test.json"
+    filename = "./mythree.js/examples/models/json/shape3d3.json"
     print 'saving to %s'%filename
-    shape3d = rotate_3d(SHAPE, NUM_ROTATIONS)
-    #print shape3d
-    ( indices, vertices, uvs, normals ) = build_triangle_indices( shape3d, NUM_ROTATIONS )
-    export_json(filename, indices, vertices, uvs, normals)
+    build_3d_shape_quads(SHAPE, NUM_ROTATIONS, filename)
