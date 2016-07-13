@@ -74,7 +74,7 @@
 				cameraTarget = new THREE.Vector3( 21.5, 5, -23.5 );
 
 				scene = new THREE.Scene();
-				scene.fog = new THREE.Fog( 0x72645b, 40, 100 );
+				// scene.fog = new THREE.Fog( 0x72645b, 40, 100 );
 
 
 				// Ground
@@ -117,42 +117,18 @@
 
 				//var material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 1000 } );
 				
-				//stlLoader.load( './models/stl/Untitled.stl', function ( geometry ) {
+				stlLoader.load( './models/stl/Untitled.stl', function ( geometry ) {
 					
-				//	var material = new THREE.MeshPhongMaterial( { color: 0xF0EEDD, specular: 0x111111, shininess: 200 } );
+					var material = new THREE.MeshPhongMaterial( { color: 0xF0EEDD, specular: 0x111111, shininess: 200 } );
 
-				//	var meshMaterial = material;
-				//	if (geometry.hasColors) {
-				//		meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
-				//	}
-				//	var mesh = new THREE.Mesh( geometry, meshMaterial );
+					var meshMaterial = material;
+					if (geometry.hasColors) {
+						meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+					}
+					var mesh = new THREE.Mesh( geometry, meshMaterial );
 					
-				//	mesh.position.set( 0, 0, 0 );
-				//	mesh.rotation.set( -Math.PI / 2, 0, 0 );
-				//	mesh.scale.set( 1, 1, 1 );
-
-				//	mesh.castShadow = true;
-				//	mesh.receiveShadow = true;
-
-				//	scene.add( mesh );
-
-				//} );
-                
-                /*
-			    //jsonLoader.load( './models/json/shape3d.json', function ( geometry ) {
-			        //obLoader.load('./models/json/teapot-claraio.json', function (geometry) {
-				obLoader.load('./models/json/teapot-claraio.json', function (geometry) {
-					var material = new THREE.MeshPhongMaterial( { color: 0x0040ff, specular: 0x111111, shininess: 20 } );
-					//var mesh = new THREE.Mesh( geometry, material );
-
-				    var meshMaterial = material;
-				    if (geometry.hasColors) {
-				        meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
-				    }
-				    var mesh = new THREE.Mesh(geometry, meshMaterial);
-
-					mesh.position.set( 25, 7, -20 );
-					mesh.rotation.set( 0, 0, 0 );
+					mesh.position.set( 0, 0, 0 );
+					mesh.rotation.set( -Math.PI / 2, 0, 0 );
 					mesh.scale.set( 1, 1, 1 );
 
 					mesh.castShadow = true;
@@ -160,18 +136,73 @@
 
 					scene.add( mesh );
 
-				} ); */
+				} );
 
-				objLoader.load("./models/json/shape3d3.json", function (obj) {
-				//objLoader.load("./models/json/teapot-claraio.json", function (obj) {
-				    //var mesh = new THREE.Mesh(obj);
 
-				    obj.position.set(21.5, 4, -23.5);
-				    //obj.rotation.set(0, -Math.PI / 2, 0);
-				    // obj.scale.set(.02, .02, .02);
-				    obj.scale.set(2, 2, 2);
-				    scene.add(obj);
-				});
+				objLoader.load( './models/json/test.json', function ( geometry ) {
+					
+					var material = new THREE.MeshPhongMaterial( { color: 0xF0EEDD, specular: 0x111111, shininess: 200 } );
+
+					var meshMaterial = material;
+					if (geometry.hasColors) {
+						meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+					}
+					var mesh = new THREE.Mesh( geometry, meshMaterial );
+					
+					mesh.position.set( 21.5, 4, -23.5 );
+					mesh.rotation.set( -Math.PI / 2, 0, 0 );
+					mesh.scale.set( 1, 1, 1 );
+
+					mesh.castShadow = true;
+					mesh.receiveShadow = true;
+
+					scene.add( mesh );
+
+				} );
+
+                
+			    //jsonLoader.load( './models/json/shape3d.json', function ( geometry ) {
+				// obLoader.load('./models/json/teapot-claraio.json', function (geometry) {
+				// objLoader.load('./models/json/teapot-claraio.json', function (geometry) {
+				// 	var material = new THREE.MeshPhongMaterial( { color: 0x0040ff, specular: 0x111111, shininess: 20 } );
+				// 	//var mesh = new THREE.Mesh( geometry, material );
+
+				//     // var meshMaterial = material;
+				//     // if (geometry.hasColors) {
+				//     //     meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+				//     // }
+				//     var mesh = new THREE.Mesh(geometry, material);
+
+				// 	mesh.position.set( 21.5, 4, -23.5 );
+				// 	mesh.rotation.set( 0, 0, 0 );
+				// 	mesh.scale.set( 1, 1, 1 );
+
+				// 	mesh.castShadow = true;
+				// 	mesh.receiveShadow = true;
+
+				// 	scene.add( mesh );
+
+				// } ); 
+
+				// objLoader.load("./models/json/shape3d3.json", function (geometry) {
+				// // objLoader.load("./models/json/teapot-claraio.json", function (geometry) {
+				//     //var material = new THREE.MeshPhongMaterial( { color: 0x0040ff, specular: 0x111111, shininess: 20 } );
+				// 	var material = new THREE.MeshPhongMaterial( {
+				// 		color: 0x156289,
+				// 		emissive: 0x072534,
+				// 		shading: THREE.FlatShading,
+				// 		shininess: 20 
+				// 	} ); 
+				// 	var material1 = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } );
+				// 	var mesh = new THREE.Mesh(geometry);
+				//     mesh.Material = material;
+				// 	// var mesh = new THREE.Mesh(geometry, material);
+				// 	mesh.position.set(21.5, 4, -23.5);
+				//     //obj.rotation.set(0, -Math.PI / 2, 0);
+				//     // obj.scale.set(.02, .02, .02);
+				// 	mesh.scale.set(1, 1, 1);
+				//     scene.add(mesh);
+				// });
                 
 /*
 				// Colored binary STL
@@ -197,17 +228,31 @@
 */
 
 				// Lights
+				//var ambientLight = new THREE.AmbientLight( 0x000000 );
+				//scene.add( ambientLight );
 
-			    scene.add( new THREE.HemisphereLight( 0xffffbb, 0xfffde6, .6 ) );
+				var lights = [];
+				lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+				lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+				lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+
+				lights[ 0 ].position.set( 0, 200, 0 );
+				lights[ 1 ].position.set( 100, 200, 100 );
+				lights[ 2 ].position.set( - 100, - 200, - 100 );
+
+				scene.add( lights[ 0 ] );
+				scene.add( lights[ 1 ] );
+				scene.add( lights[ 2 ] );
+			    // scene.add( new THREE.HemisphereLight( 0xffffbb, 0xfffde6, .6 ) );
 			    //scene.add(new THREE.AmbientLight(0x404040, .6));
 
-				addShadowedLight( 40, 50, -20, 0xffffff, .3 );
+				// addShadowedLight( 40, 50, -20, 0xffffff, .3 );
 				//addShadowedLight( 0, 0, 20, 0xffffff, 1.35 );
 				// 	addShadowedLight( 5, 10, -10, 0xffaa00, 1 );
 				// renderer
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setClearColor( scene.fog.color );
+				//renderer.setClearColor( scene.fog.color );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
