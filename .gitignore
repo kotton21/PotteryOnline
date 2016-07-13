@@ -7,3 +7,6 @@ three.js-master/*
 PotGenerator.py.save
 server2.py.save
 /3d.py
+/mythree.js/examples/models/json/scene.json
+/mythree.js/examples/models/json/scene-animation.json
+/mythree.js/examples/models/json/pressure.json
