@@ -1,10 +1,3 @@
-
-#shape in 2d:
-#translate to 3d
-#Apply rotation matrix
-#result: 3d array nx3xs : n=numpoints and s=rotation slices
-
-
 import numpy as np
 import json
 
@@ -14,7 +7,7 @@ def rotate_3d( SHAPE, NUM_ROTATIONS ):
     """
     
     Rotates the given shape around the y axis.
-    Expects SHAPE to be an n x 2 list
+    Expects SHAPE to be an n x 2 nested list
     
     """
 
@@ -152,6 +145,13 @@ def export_json(filename, indices, vertices, uvs, normals):
     normals = np.around(normals, 4).reshape((NUM_VERTS*2*3)).tolist()
     uvs = np.around(uvs, 4).reshape((NUM_VERTS*2)).tolist()
 
+    #import uuid
+    #materialID = uuid.uuid4()
+    #geometryID = uuid.uuid4()
+    #objID = uuid.uuid5(uuid.NAMESPACE_URL, "www.karlsbayer.com")
+
+    #old uuid 
+
     materials = [{u'opacity': 1, u'uuid': u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', u'color': 16714940, u'wireframe': False, u'emissive': 0, u'shininess': 50, u'specular': 0, u'ambient': 16714940, u'type': u'MeshPhongMaterial', u'transparent': False}]
 
     metadata = {
@@ -206,8 +206,8 @@ if __name__ == "__main__":
     NUM_ROTATIONS = 20
     
     filename = "./test.json"
-
+    print 'saving to %s'%filename
     shape3d = rotate_3d(SHAPE, NUM_ROTATIONS)
-    print shape3d
+    #print shape3d
     ( indices, vertices, uvs, normals ) = build_triangle_indices( shape3d, NUM_ROTATIONS )
     export_json(filename, indices, vertices, uvs, normals)
