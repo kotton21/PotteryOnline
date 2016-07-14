@@ -10,3 +10,4 @@ server2.py.save
 /mythree.js/examples/models/json/scene.json
 /mythree.js/examples/models/json/scene-animation.json
 /mythree.js/examples/models/json/pressure.json
+*.vscode
