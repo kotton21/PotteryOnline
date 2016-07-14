@@ -162,16 +162,29 @@
 
 				} ); */
 
+                //works!! dont change.
 				objLoader.load("./models/json/shape3d3.json", function (obj) {
 				//objLoader.load("./models/json/teapot-claraio.json", function (obj) {
-				    //var mesh = new THREE.Mesh(obj);
-
+				    //obj.material.shading = THREE.SmoothShading;
 				    obj.position.set(21.5, 4, -23.5);
 				    //obj.rotation.set(0, -Math.PI / 2, 0);
 				    // obj.scale.set(.02, .02, .02);
 				    obj.scale.set(2, 2, 2);
+				    //var mesh = new THREE.Mesh(obj);
 				    scene.add(obj);
 				});
+
+				//objLoader.load("./models/json/shape3d3.json", function (geometry, material) {
+				//    //objLoader.load("./models/json/teapot-claraio.json", function (obj) {
+				//    var mesh = new THREE.Mesh(geometry, material);
+				//    //mesh.shading.set(THREE.FlatShading);
+				//    //mesh.material.shading = THREE.SmoothShading;
+				//    mesh.position.set(21.5, 0, -23.5);
+				//    //obj.rotation.set(0, -Math.PI / 2, 0);
+				//    // obj.scale.set(.02, .02, .02);
+				//    mesh.scale.set(2, 2, 2);
+				//    scene.add(mesh);
+				//});
                 
 /*
 				// Colored binary STL
