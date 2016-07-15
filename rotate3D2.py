@@ -348,7 +348,7 @@ def build_3d_shape_quads(SHAPE, NUM_ROTATIONS, FILENAME):
     baseCCW = np.array([type, 0, NUM_POINTS, NUM_POINTS+1, 1, 0 ])
 
     shape3d_out = rotate_3d(SHAPE, NUM_ROTATIONS)
-    shape3d_in = rotate_3d(shift_x(SHAPE, .1), NUM_ROTATIONS)
+    shape3d_in = rotate_3d(shift_x(SHAPE, 1.5), NUM_ROTATIONS)
 
     ( faces_out, vertices_out, normals_out) = build_quad_indices( shape3d_out, NUM_ROTATIONS, baseCW)
     ( faces_in, vertices_in, normals_in ) = build_quad_indices( shape3d_in, NUM_ROTATIONS, baseCCW )
@@ -360,9 +360,19 @@ def build_3d_shape_quads(SHAPE, NUM_ROTATIONS, FILENAME):
     #print faces_out.shape
     #print faces_in_offset
     #print (faces_in + faces_in_offset)[0,0]
+    
+    #faces = faces_out
+    #vertices = vertices_out
+    #normals = normals_out
+
+    #faces = faces_in
+    #vertices = vertices_in
+    #normals = normals_in
+
     faces = np.vstack((faces_out, faces_in + faces_in_offset ))
     vertices = np.vstack((vertices_out, vertices_in))
     normals = np.vstack((normals_out, normals_in))
+    
     export_json_simple(FILENAME, faces, vertices, normals )
     #print faces, vertices, normals
     print 'saving to "%s"'%FILENAME
@@ -370,9 +380,9 @@ def build_3d_shape_quads(SHAPE, NUM_ROTATIONS, FILENAME):
 
 if __name__ == "__main__":
     SHAPE = [
-        [1,0],
-        [1,1],
-        [3,2]]
+        [3,0],
+        [3,1],
+        [4,1]]
     #SHAPE = [
     #	[3, 3],
     #	[2.1, 2],

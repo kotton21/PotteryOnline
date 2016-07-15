@@ -296,7 +296,7 @@
 			    var timer = Date.now() * 0.001;
 
 				camera.position.x = Math.cos( timer ) * cameraDistance + cameraOffset;
-				camera.position.y = Math.sin(timer*.5) * 3 + 10;
+				camera.position.y = Math.sin(timer * 2) * 5 + 4; // + 10;
 				camera.position.z = Math.sin(timer) * cameraDistance - cameraOffset;
 
 				camera.lookAt( cameraTarget );
