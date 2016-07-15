@@ -73,9 +73,13 @@ class PolyPotGenerator(list):
 		# print x,y
 		return self.verify(x,y)
 
-	def zipPoints(self):
+	def zipPoints(self, scale=.05, flip=True):
 		(X, Y) = self.getPoints()
-		shape = [[x,y] for (x,y) in zip(X,Y)]
+		shape = []
+		if flip:
+			shape = [[scale*y, scale*x] for (x,y) in zip(X,Y)]
+		else:
+			shape = [[scale*x, scale*y] for (x,y) in zip(X,Y)]
 		return shape
 			
 	def plot(self,save):

@@ -163,9 +163,12 @@
 				} ); */
 
                 //works!! dont change.
-				objLoader.load("./models/json/shape3d3.json", function (obj) {
+				objLoader.load("./models/json/shape3d.json", function (obj) {
 				//objLoader.load("./models/json/teapot-claraio.json", function (obj) {
 				    //obj.material.shading = THREE.SmoothShading;
+				    obj.geometry.computeFaceNormals()
+				    obj.geometry.computeVertexNormals()
+                    console.log(obj.material)
 				    obj.position.set(21.5, 4, -23.5);
 				    //obj.rotation.set(0, -Math.PI / 2, 0);
 				    // obj.scale.set(.02, .02, .02);
@@ -213,8 +216,10 @@
 
 			    scene.add( new THREE.HemisphereLight( 0xffffbb, 0xfffde6, .6 ) );
 			    //scene.add(new THREE.AmbientLight(0x404040, .6));
-
-				addShadowedLight( 40, 50, -20, 0xffffff, .3 );
+				pointlight = new THREE.PointLight('0x000099', 1, 50, 2)
+                pointlight.position = new THREE.Vector3( 15, 2, -15 )
+                scene.add(pointlight);
+				//addShadowedLight( 40, 50, -20, 0xffffff, .3 );
 				//addShadowedLight( 0, 0, 20, 0xffffff, 1.35 );
 				// 	addShadowedLight( 5, 10, -10, 0xffaa00, 1 );
 				// renderer
