@@ -1,0 +1,250 @@
+<html>
+<head>
+<style type="text/css">
+    /*  SECTIONS  */
+    body {
+        background: #E4E4E4 url("site/bg.png");
+        color: #292929;
+        color: rgba(0, 0, 0, 0.82);
+        font: normal 100% Cambria, Georgia, serif;
+        -moz-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+        -webkit-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+        -webkit-text-size-adjust: none;
+    }
+    a {
+        color: #890101;
+        text-decoration: none;
+        -moz-transition: 0.2s color linear;
+        -webkit-transition: 0.2s color linear;
+        transition: 0.2s color linear;
+    }
+    #page {
+        background: url("site/rag.png") repeat-x;
+        padding: 2em 0;
+    }
+    .inner {
+        margin: 0 auto;
+        width: 93.75%;		/* 960px / 1024px */
+    }
+    img {
+        max-width: 100%;
+    }
+    .section {
+        clear: both;
+        padding: 0px;
+        margin: 0px;
+    }
+    .section:after,
+    ul.nav:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    /*  COLUMN SETUP  */
+    /*.col {
+        display: block;
+        float:left;
+        margin: 1% 0 1% 1.6%;
+    }
+    .col:first-child { margin-left: 0; }*/
+
+    /*  GROUPING  */
+    /*.group:before,
+    .group:after { content:""; display:table; }
+    .group:after { clear:both;}*/
+    /* .group { zoom:1; For IE 6/7  } */
+    
+    /*  GRID OF THREE  */
+    /*.span_3_of_3 { width: 100%; }
+    .span_2_of_3 { width: 66.13%; }
+    .span_1_of_3 { width: 32.26%; }*/
+
+    /*  GO FULL WIDTH BELOW 640 PIXELS */
+    /*@media only screen and (max-width: 660px) {
+        .col {  margin: 1% 0 1% 0%; }
+        .span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
+    }*/
+
+    li#f-3,
+    li#f-6 {
+        margin-right: 0;
+    }
+    @media (max-width: 400px) {
+        .figure,
+        li#f-3 {
+            margin-right: 3.317535545023696682%;	/* 21px / 633px */
+            width: 48.341232227488151658%;	/* 306px / 633px */
+        }
+        li#f-2,
+        li#f-4 {
+            margin-right: 0;
+        }
+    }
+
+    /* custom from rwd */
+    .figure {
+        float: left;
+        font-size: 10px;
+        line-height: 1.1;
+        margin: 0 3.317535545023696682% 1.5em 0;			/* 21px / 633px */
+        text-align: center;
+        width: 31.121642969984202211%;				/* 197px / 633px */
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .figure b {
+        display: block;
+        font-size: 14px;
+        font-family: "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        letter-spacing: 0.1em;
+    }
+    .figure img {
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);;
+        display: block;
+        margin: 0 auto 1em;
+    }
+    /* mugshots */
+    /*div#figs {
+        width:20%;
+    }*/
+    a.image_container {
+        /*background-color: #999;*/
+        width: 200px;
+        /*height: 180px;*/
+        display: inline-block;
+        overflow: hidden;
+    }
+    a.image_container img {
+        width: 100%;
+    }
+
+</style>
+</head>
+<body>
+    <!--<div class="section group">
+        <div class="col span_1_of_3 figure">
+            <!--<div id="figs">
+                <img id="figs" src="images/GreekSplatter.jpg" alt>
+            </div>
+            <a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            This is a description of the above peice that tells something interesting about it!
+        </div>
+        <div class="col span_1_of_3 figure">
+        	<a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            More description
+        </div>
+        <div class="col span_1_of_3 figure">
+        	<a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            Other description
+        </div>
+    </div>-->
+
+    <div class="inner section main">
+
+    <ol>
+        <li id="f-1" class="figure">            
+            <a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            <span>
+                "the fig caption 1"
+            </span>
+        </li>
+        <li id="f-2" class="figure">            
+            <a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            <span>
+                "the fig caption 2"
+            </span>
+        </li>
+        <li id="f-3" class="figure">            
+            <a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            <span>
+                "the fig caption 3"
+            </span>
+        </li>
+        <li id="f-4" class="figure">
+        	<a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            Other description 4
+        </li>
+        <li id="f-5" class="figure">            
+            <a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            <span>
+                "the fig caption 5"
+            </span>
+        </li>
+        <li id="f-6" class="figure">
+        	<a class="image_container" href="images/GreekSplatter.jpg">
+                <img src="images/GreekSplatter.jpg" alt="" />
+            </a>
+            <span class="figcaption">Sherlock <b>Holmes</b></span>
+        </li>
+    </ol>
+    </div>
+
+
+    <div class="section main">
+			<h2><b>Victors <abbr class="amp" title="And">&amp;</abbr> Villains</b></h2>
+			<ol>
+				<li id="f-1" class="figure">
+					<a href="#">
+						<img src="images/GreekSplatter.jpg" alt="">
+						<span class="figcaption">Sherlock <b>Holmes</b></span>
+					</a>
+				</li><!-- /end .figure -->
+				<li id="f-2" class="figure">
+					<a href="#">
+						<img src="images/GreekSplatter.jpg" alt="">
+						<span class="figcaption"><abbr title="Professor">Dr</abbr> John Hemish <b>Watson</b></span>
+					</a>
+				</li><!-- /end .figure -->
+				<li id="f-3" class="figure">
+					<a href="#">
+						<img src="images/GreekSplatter.jpg" alt="">
+						<span class="figcaption">Mycroft <b>Holmes</b></span>
+					</a>
+				</li><!-- /end .figure -->
+				<li id="f-4" class="figure">
+					<a href="#">
+						<img src="images/GreekSplatter.jpg" alt="">
+						<span class="figcaption"><abbr title="Professor">Prof</abbr> James <b>Moriarty</b></span>
+					</a>
+				</li><!-- /end .figure -->
+				<li id="f-5" class="figure">
+					<a href="#">
+						<img src="images/GreekSplatter.jpg" alt="">
+						<span class="figcaption">Irene <b>Adler</b></span>
+					</a>
+				</li><!-- /end .figure -->
+				<li id="f-6" class="figure">
+					<a href="#">
+						<img src="images/GreekSplatter.jpg" alt="">
+						<span class="figcaption">James <b>Winter</b></span>
+					</a>
+				</li><!-- /end .figure -->
+			</ol>
+		</div><!-- /end .section.main -->
+</body>
+</html>
