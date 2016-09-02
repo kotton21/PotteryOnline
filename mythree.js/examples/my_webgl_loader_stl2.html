@@ -162,16 +162,32 @@
 
 				} ); */
 
-				objLoader.load("./models/json/shape3d3.json", function (obj) {
+                //works!! dont change.
+				objLoader.load("./models/json/shape3d.json", function (obj) {
 				//objLoader.load("./models/json/teapot-claraio.json", function (obj) {
-				    //var mesh = new THREE.Mesh(obj);
-
+				    //obj.material.shading = THREE.SmoothShading;
+				    obj.geometry.computeFaceNormals()
+				    obj.geometry.computeVertexNormals()
+                    console.log(obj.material)
 				    obj.position.set(21.5, 4, -23.5);
 				    //obj.rotation.set(0, -Math.PI / 2, 0);
 				    // obj.scale.set(.02, .02, .02);
 				    obj.scale.set(2, 2, 2);
+				    //var mesh = new THREE.Mesh(obj);
 				    scene.add(obj);
 				});
+
+				//objLoader.load("./models/json/shape3d3.json", function (geometry, material) {
+				//    //objLoader.load("./models/json/teapot-claraio.json", function (obj) {
+				//    var mesh = new THREE.Mesh(geometry, material);
+				//    //mesh.shading.set(THREE.FlatShading);
+				//    //mesh.material.shading = THREE.SmoothShading;
+				//    mesh.position.set(21.5, 0, -23.5);
+				//    //obj.rotation.set(0, -Math.PI / 2, 0);
+				//    // obj.scale.set(.02, .02, .02);
+				//    mesh.scale.set(2, 2, 2);
+				//    scene.add(mesh);
+				//});
                 
 /*
 				// Colored binary STL
@@ -200,8 +216,10 @@
 
 			    scene.add( new THREE.HemisphereLight( 0xffffbb, 0xfffde6, .6 ) );
 			    //scene.add(new THREE.AmbientLight(0x404040, .6));
-
-				addShadowedLight( 40, 50, -20, 0xffffff, .3 );
+				pointlight = new THREE.PointLight('0x000099', 1, 50, 2)
+                pointlight.position = new THREE.Vector3( 15, 2, -15 )
+                scene.add(pointlight);
+				//addShadowedLight( 40, 50, -20, 0xffffff, .3 );
 				//addShadowedLight( 0, 0, 20, 0xffffff, 1.35 );
 				// 	addShadowedLight( 5, 10, -10, 0xffaa00, 1 );
 				// renderer
@@ -278,7 +296,7 @@
 			    var timer = Date.now() * 0.001;
 
 				camera.position.x = Math.cos( timer ) * cameraDistance + cameraOffset;
-				camera.position.y = Math.sin(timer*.5) * 3 + 10;
+				camera.position.y = Math.sin(timer * 2) * 5 + 4; // + 10;
 				camera.position.z = Math.sin(timer) * cameraDistance - cameraOffset;
 
 				camera.lookAt( cameraTarget );

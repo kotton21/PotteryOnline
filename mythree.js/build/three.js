@@ -10666,7 +10666,7 @@ Object.assign( THREE.Geometry.prototype, THREE.EventDispatcher.prototype, {
 	 */
 
 	mergeVertices: function () {
-
+		console.log("mergeVertices")
 		var verticesMap = {}; // Hashmap for looking up vertices by position coordinates (and making sure they are unique)
 		var unique = [], changes = [];
 
@@ -18689,9 +18689,9 @@ Object.assign( THREE.JSONLoader.prototype, {
 			zLength = faces.length;
 
 			while ( offset < zLength ) {
-
+				console.log(offset)
 				type = faces[ offset ++ ];
-
+				console.log(type)
 
 				isQuad              = isBitSet( type, 0 );
 				hasMaterial         = isBitSet( type, 1 );
@@ -18719,6 +18719,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					offset += 4;
 
 					if ( hasMaterial ) {
+						console.log("hasMaterial");
 
 						materialIndex = faces[ offset ++ ];
 						faceA.materialIndex = materialIndex;
@@ -18758,6 +18759,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					}
 
 					if ( hasFaceNormal ) {
+						console.log("hasFaceNormal")
 
 						normalIndex = faces[ offset ++ ] * 3;
 
@@ -18772,6 +18774,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					}
 
 					if ( hasFaceVertexNormal ) {
+						console.log("hasFaceVertexNormal")
 
 						for ( i = 0; i < 4; i ++ ) {
 
@@ -18840,6 +18843,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					fi = geometry.faces.length;
 
 					if ( hasFaceVertexUv ) {
+						console.log("hasFaceVertexUv")
 
 						for ( i = 0; i < nUvLayers; i ++ ) {
 
@@ -18865,6 +18869,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					}
 
 					if ( hasFaceNormal ) {
+						console.log("hasFaceNormal")
 
 						normalIndex = faces[ offset ++ ] * 3;
 
@@ -18877,6 +18882,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 					}
 
 					if ( hasFaceVertexNormal ) {
+						console.log("hasFaceVertexNormal")
 
 						for ( i = 0; i < 3; i ++ ) {
 
@@ -18896,6 +18902,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 
 
 					if ( hasFaceColor ) {
+						console.log("hasFaceColor")
 
 						colorIndex = faces[ offset ++ ];
 						face.color.setHex( colors[ colorIndex ] );
@@ -18904,6 +18911,7 @@ Object.assign( THREE.JSONLoader.prototype, {
 
 
 					if ( hasFaceVertexColor ) {
+						console.log("hasFaceVertexColor")
 
 						for ( i = 0; i < 3; i ++ ) {
 

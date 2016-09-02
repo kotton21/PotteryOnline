@@ -1,7 +1,20 @@
 import numpy as np
 import json
 
+def shift_x( SHAPE, SHIFT ):
+    """
+    Shifts the shape over by the specified SHIFT. 
+    Returns the two shapes separately so they can
+    be properly dealt with when building the final shape.
+    
+    """
+    NUM_POINTS = len(SHAPE)
 
+    #make nparray
+    shape = np.array(SHAPE)
+    shape = shape - np.array([SHIFT, 0])
+    
+    return shape
 
 def rotate_3d( SHAPE, NUM_ROTATIONS ):
     """
@@ -36,7 +49,8 @@ def rotate_3d( SHAPE, NUM_ROTATIONS ):
     #print shape3d[0,:,:]
     return shape3d
 
-def build_quad_indices( shape3d, NUM_ROTATIONS ):
+
+def build_quad_indices( shape3d, NUM_ROTATIONS, base ):
     """
 
     Builds quad indexes, normals, and faces from the shape vertices
@@ -45,36 +59,54 @@ def build_quad_indices( shape3d, NUM_ROTATIONS ):
     want them just on the faces?
     Should be able to do this with a numpy dot product if i keep the
     num-verts constant and use the same tranformation matrix..
+    
+    base is the 1x5 array representing the order in which the points
+    are sampled into 'faces'
 
     """
     NUM_POINTS = shape3d.shape[1]
     NUM_VERTS = NUM_POINTS * NUM_ROTATIONS
 
-    faces = np.zeros(( NUM_VERTS, 5 ))
+    faces = np.zeros(( NUM_VERTS - NUM_ROTATIONS, 6 ))
     vertices = np.zeros(( NUM_VERTS, 3 ))
     #uvs = np.zeros(( NUM_VERTS, 2 ))
-    #normals = np.zeros(( NUM_VERTS * 2, 3 ))
+    normals = np.zeros(( NUM_VERTS - NUM_ROTATIONS, 3 ))
     # powarr = np.array([2,2])
     # powind = np.array([0,2])
 
+    base_vert = np.array([ 0, 1, 1, 1, 1, 0 ])
+    base_norm = np.array([ 0, 0, 0, 0, 0, 1 ])
+
+
+    j = 0
     for i in range(NUM_VERTS):
+        #vertices for each quad
         p = i % NUM_POINTS
         r = i / NUM_POINTS
-
-        #faces for each quad
-        faces[i,:] = np.array([1,
-            i, 
-            (i+1)%NUM_VERTS, 
-            (NUM_POINTS+i+1)%NUM_VERTS,
-            (NUM_POINTS+i)%NUM_VERTS
-        ])
-        #vertices for each quad
+        pp = (p+1)%NUM_POINTS
+        rr = (r+1)%NUM_ROTATIONS
+        
         vertices[i,:] = shape3d[r, p, :]
 
-    return (faces, vertices)
+        #faces are indices of vertices once the vertice array is reshaped into NUM_VERTS x 1 array.
+        #prevent wrap-around in the model:
+        if (i % NUM_POINTS) != (NUM_POINTS - 1):
+            #faces for each quad
+            faces[j,:] = (base + (base_vert * i) + (base_norm * j) )%NUM_VERTS
+            
+            #normals: cross of two vectors created by vertex. 1 normal/face? or 5 normals/face
+            vec1 = shape3d[r, pp, :] - shape3d[r, p, :]
+            vec2 = shape3d[rr, p, :] - shape3d[r, p, :]
+            #print j, NUM_VERTS - NUM_ROTATIONS, np.cross(vec1, vec2)
+            norm = np.cross(vec1, vec2)
+            normals[j,:] = norm #/np.linalg.norm(norm)
 
-
-
+            #uvs
+            
+            #keep correct indexing
+            j = j + 1
+        
+    return (faces, vertices, normals)
 
 
 def build_triangle_indices( shape3d, NUM_ROTATIONS ):
@@ -231,7 +263,7 @@ def build_3d_shape(SHAPE, NUM_ROTATIONS, FILENAME):
     export_json(FILENAME, indices, vertices, uvs, normals)
     print 'saving to "%s"'%FILENAME
 
-def export_json_simple(filename, faces, vertices):
+def export_json_simple(filename, faces, vertices, normals):
     """
 
     Exports the given shape to a json file
@@ -240,9 +272,14 @@ def export_json_simple(filename, faces, vertices):
 
     NUM_VERTS = len( vertices )
 
-    faces = faces.reshape(NUM_VERTS*4+(NUM_VERTS)).tolist()
+    face_size = np.prod(np.shape(faces))
+    vertice_size = np.prod(np.shape(vertices))
+    normals_size = np.prod(np.shape(normals))
+
+    faces = faces.reshape( face_size ).tolist()
     # print faces
-    vertices = np.around(vertices, 4).reshape((NUM_VERTS*3)).tolist()
+    vertices = np.around(vertices, 4).reshape(vertice_size).tolist()
+    normals = np.around(normals, 4).reshape(normals_size).tolist()
     # normals = np.around(normals, 4).reshape((NUM_VERTS*2*3)).tolist()
     # uvs = np.around(uvs, 4).reshape((NUM_VERTS*2)).tolist()
 
@@ -253,7 +290,29 @@ def export_json_simple(filename, faces, vertices):
 
     #old uuid 
 
-    # materials = [{u'opacity': 1, u'uuid': u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', u'color': 16712000, u'wireframe': False, u'emissive': 0, u'shininess': 50, u'specular': 0, u'ambient': 16714940, u'type': u'MeshPhongMaterial', u'transparent': False}]
+    #materialPhong = [{u'opacity': 1, 
+    #              u'uuid': u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', 
+    #              u'color': 16712000, 
+    #              u'wireframe': False, 
+    #              u'emissive': 0, 
+    #              u'shininess': 50, 
+    #              u'specular': 0, 
+    #              u'ambient': 16714940, 
+    #              u'type': u'MeshPhongMaterial', 
+    #              #u'wireframe': True,
+    #              u'transparent': False
+    #              }]
+
+    materialStandard = [{u'opacity': 1, 
+                  u'uuid': u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', 
+                  u'color': 16712000, 
+                  u'wireframe': False, 
+                  u'emissive': 0, 
+                  u'shininess': 30, 
+                  u'type': u'MeshStandardMaterial', 
+                  #u'wireframe': True,
+                  u'transparent': False
+                  }]
 
     metadata = {
             u"version"      : 4,
@@ -262,14 +321,16 @@ def export_json_simple(filename, faces, vertices):
     }
 
     data = {
-        u"faces": faces,
-        u"vertices": vertices
+        u"faces":       faces,
+        u"vertices":    vertices,
+        u"normals":     normals
         }   
     geometries = [{u"data":data, u"uuid": u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u"type":u"Geometry"}]
-    obj = {u'uuid': u'0D4F494E-35AD-4D5B-9696-7DF60B73E7F0', u'geometry': u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u'matrix': [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], u'castShadow': True,
+    obj = {u'uuid': u'0D4F494E-35AD-4D5B-9696-7DF60B73E7F0', u'geometry': u'15930b1c-1b50-4926-a0ac-df433b9c4f96', u'material': 
+        u'7AAB18E5-FF88-4A82-8018-4DF34EDB7539', u'matrix': [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], u'castShadow': True,
         u'type': u'Mesh', u'receiveShadow': True, u'name': u'shape3d001'
         }
-    jobj = {u'object':obj, u'geometries':geometries, u'metadata':metadata}
+    jobj = {u'object':obj, u'materials':materialStandard, u'geometries':geometries, u'metadata':metadata}
 
     # FILEPATH = "C:/Users/Kbayer/Source/Repos/PotteryOnline/mythree.js/examples/models/json/"
     # FILENAME = "shape3d.json"
@@ -280,24 +341,58 @@ def export_json_simple(filename, faces, vertices):
     print 'faces len: ',len(faces)
 
 def build_3d_shape_quads(SHAPE, NUM_ROTATIONS, FILENAME):
-    shape3d = rotate_3d(SHAPE, NUM_ROTATIONS)
-    ( faces, vertices ) = build_quad_indices( shape3d, NUM_ROTATIONS )
-    export_json_simple(FILENAME, faces, vertices )
+    NUM_POINTS = len(SHAPE)
+    #NUM_VERTS = NUM_POINTS * NUM_ROTATIONS
+    type = 0b00010001
+    baseCW = np.array([type, 0, 1, NUM_POINTS+1, NUM_POINTS, 0 ])
+    baseCCW = np.array([type, 0, NUM_POINTS, NUM_POINTS+1, 1, 0 ])
+
+    shape3d_out = rotate_3d(SHAPE, NUM_ROTATIONS)
+    shape3d_in = rotate_3d(shift_x(SHAPE, 1.5), NUM_ROTATIONS)
+
+    ( faces_out, vertices_out, normals_out) = build_quad_indices( shape3d_out, NUM_ROTATIONS, baseCW)
+    ( faces_in, vertices_in, normals_in ) = build_quad_indices( shape3d_in, NUM_ROTATIONS, baseCCW )
+
+    off = np.shape(faces_out)[0]
+    faces_in_offset =  np.array([0,off,off,off,off, off])#np.prod(np.shape(faces_out))
+
+    #print vertices_out.shape
+    #print faces_out.shape
+    #print faces_in_offset
+    #print (faces_in + faces_in_offset)[0,0]
+    
+    #faces = faces_out
+    #vertices = vertices_out
+    #normals = normals_out
+
+    #faces = faces_in
+    #vertices = vertices_in
+    #normals = normals_in
+
+    faces = np.vstack((faces_out, faces_in + faces_in_offset ))
+    vertices = np.vstack((vertices_out, vertices_in))
+    normals = np.vstack((normals_out, normals_in))
+    
+    export_json_simple(FILENAME, faces, vertices, normals )
+    #print faces, vertices, normals
     print 'saving to "%s"'%FILENAME
 
 
 if __name__ == "__main__":
     SHAPE = [
-        [1,0],
-        [2,1],
-        [2.1,2],
-        [3,3]]
+        [3,0],
+        [3,1],
+        [4,1]]
     #SHAPE = [
-    #	[1,0],
-    #	[1,1]]
+    #	[3, 3],
+    #	[2.1, 2],
+    #	[2, 2],
+    #	[1, 0]]
 
-    NUM_ROTATIONS = 10
+
+
+    NUM_ROTATIONS = 20
     
-    filename = "./mythree.js/examples/models/json/shape3d3.json"
+    filename = "./mythree.js/examples/models/json/shape3d.json"
     print 'saving to %s'%filename
     build_3d_shape_quads(SHAPE, NUM_ROTATIONS, filename)
